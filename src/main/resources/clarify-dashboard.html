@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarify APM Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 1300px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        input[type="text"]:focus {
+            border-color: #38bdf8;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            background: #38bdf8;
+            color: #0f172a;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background: #7dd3fc;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            min-width: 1100px;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-OK {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-WARN {
+            background: rgba(234, 179, 8, 0.2);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .badge-DANGER {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-ERROR {
+            background: rgba(220, 38, 38, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            font-weight: 800;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        /* Feature 8: Analytics Styles */
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            color: #94a3b8;
+            font-weight: 600;
+            transition: color 0.3s, border-bottom 0.3s;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #38bdf8;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.6rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #38bdf8;
+            box-shadow: 0 0 10px #38bdf8;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .analytics-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .analytics-card h3 {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ranking-item {
+            margin-bottom: 1rem;
+        }
+
+        .ranking-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .ranking-method {
+            font-family: monospace;
+            color: #f8fafc;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 70%;
+        }
+
+        .ranking-value {
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease-out;
+        }
+
+        .fill-ram { background: linear-gradient(to right, #a78bfa, #8b5cf6); }
+        .fill-cpu { background: linear-gradient(to right, #818cf8, #4f46e5); }
+        .fill-time { background: linear-gradient(to right, #38bdf8, #0ea5e9); }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Clarify APM</h1>
+        <p style="color: #94a3b8; margin-top: 0.5rem;">Performance Monitoring & Auditing</p>
+    </header>
+
+    <div class="glass-container">
+        <div class="tabs">
+            <div class="tab active" id="tab-logs" onclick="switchTab('logs')">Log History</div>
+            <div class="tab" id="tab-analytics" onclick="switchTab('analytics')">Clarify Analytics</div>
+        </div>
+
+        <div id="view-logs">
+            <div class="controls">
+                <input type="text" id="searchInput" placeholder="Search by method, tag, DANGER...">
+                <button onclick="fetchLogs()">Refresh Data</button>
+            </div>
+
+            <div class="table-responsive">
+                <table id="logsTable">
+                    <thead>
+                        <tr>
+                        <th style="white-space: nowrap;">Date/Time</th>
+                        <th style="white-space: nowrap;">Status</th>
+                        <th style="white-space: nowrap;">Action</th>
+                        <th style="white-space: nowrap;">Method</th>
+                        <th style="white-space: nowrap;">Duration</th>
+                        <th style="white-space: nowrap;">CPU Time</th>
+                        <th style="white-space: nowrap;">RAM Alloc</th>
+                        <th style="min-width: 300px;">Message</th>
+                    </tr>
+                    </thead>
+                    <tbody id="logsBody">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="view-analytics" style="display: none;">
+            <div class="analytics-grid" id="analyticsGrid">
+                <!-- Analytics cards will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/clarify/api/logs';
+        let allLogs = [];
+
+        function parseLogLine(line) {
+            try {
+                // Tchau Regex, olá JSON!
+                const log = JSON.parse(line);
+                return {
+                    datetime: log.datetime || '-',
+                    status: log.status || 'UNKNOWN',
+                    action: log.action || '-',
+                    method: log.method || '-',
+                    duration: log.duration || '-',
+                    cpuTime: log.cpuTime || '-',
+                    ramAllocated: log.ramAllocated || '-',
+                    message: log.message || '-',
+                    args: log.args || 'No arguments',
+                    raw: line
+                };
+            } catch (e) {
+                // If parse fails (e.g. old log format), show warning message
+                return { datetime: '-', status: 'UNKNOWN', action: '-', method: '-', duration: '-', message: '⚠️ Incompatible log (Old format). Clear your log file.', args: '-', raw: line };
+            }
+        }
+
+        async function fetchLogs() {
+            const tbody = document.getElementById('logsBody');
+            tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Loading logs from disk...</td></tr>';
+
+            try {
+                const response = await fetch(API_URL);
+                const lines = await response.json();
+
+                allLogs = lines.filter(l => l.trim() !== '').map(parseLogLine).reverse(); // Most recent first
+                renderTable(allLogs);
+                renderAnalytics();
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="8" class="empty-state" style="color: #f87171;">Error loading data from API.</td></tr>`;
+            }
+        }
+
+        function switchTab(tab) {
+            document.getElementById('view-logs').style.display = tab === 'logs' ? 'block' : 'none';
+            document.getElementById('view-analytics').style.display = tab === 'analytics' ? 'block' : 'none';
+            
+            document.getElementById('tab-logs').classList.toggle('active', tab === 'logs');
+            document.getElementById('tab-analytics').classList.toggle('active', tab === 'analytics');
+            
+            if (tab === 'analytics') renderAnalytics();
+        }
+
+        function parseRAM(ramStr) {
+            if (!ramStr || ramStr === '-') return 0;
+            const value = parseFloat(ramStr);
+            if (ramStr.includes('GB')) return value * 1024 * 1024 * 1024;
+            if (ramStr.includes('MB')) return value * 1024 * 1024;
+            if (ramStr.includes('KB')) return value * 1024;
+            return value;
+        }
+
+        function formatRAM(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        function renderAnalytics() {
+            const grid = document.getElementById('analyticsGrid');
+            if (allLogs.length === 0) {
+                grid.innerHTML = '<p class="empty-state">Insufficient data for analytics.</p>';
+                return;
+            }
+
+            const groups = {};
+            allLogs.forEach(log => {
+                if (!groups[log.method]) {
+                    groups[log.method] = { name: log.method, ramTotal: 0, cpuTotal: 0, durationTotal: 0, count: 0 };
+                }
+                const g = groups[log.method];
+                g.ramTotal += parseRAM(log.ramAllocated);
+                g.cpuTotal += parseInt(log.cpuTime) || 0;
+                g.durationTotal += parseInt(log.duration) || 0;
+                g.count++;
+            });
+
+            const methodStats = Object.values(groups);
+
+            const ramRanking = [...methodStats].sort((a, b) => b.ramTotal - a.ramTotal).slice(0, 5);
+            const cpuRanking = [...methodStats].sort((a, b) => (b.cpuTotal/b.count) - (a.cpuTotal/a.count)).slice(0, 5);
+            const timeRanking = [...methodStats].sort((a, b) => (b.durationTotal/b.count) - (a.durationTotal/a.count)).slice(0, 5);
+
+            grid.innerHTML = `
+                ${renderCard('Top RAM Allocators (Total)', ramRanking, 'ramTotal', val => formatRAM(val), 'fill-ram')}
+                ${renderCard('Top CPU Burners (Avg)', cpuRanking, 'cpuTotal', (val, g) => (val/g.count).toFixed(1) + 'ms', 'fill-cpu')}
+                ${renderCard('Top Slow Methods (Avg)', timeRanking, 'durationTotal', (val, g) => (val/g.count).toFixed(1) + 'ms', 'fill-time')}
+            `;
+        }
+
+        function renderCard(title, data, key, formatter, fillClass) {
+            const maxVal = data.length > 0 ? (key === 'ramTotal' ? data[0][key] : data[0][key]/data[0].count) : 1;
+            
+            return `
+                <div class="analytics-card">
+                    <h3>${title}</h3>
+                    ${data.map(g => {
+                        const currentVal = key === 'ramTotal' ? g[key] : g[key]/g.count;
+                        const percent = (currentVal / maxVal) * 100;
+                        return `
+                            <div class="ranking-item">
+                                <div class="ranking-info">
+                                    <span class="ranking-method" title="${g.name}">${g.name}</span>
+                                    <span class="ranking-value">${formatter(g[key], g)}</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill ${fillClass}" style="width: ${percent}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function toggleDetails(index) {
+            const detailsRow = document.getElementById(`details-${index}`);
+            if (detailsRow.style.display === 'none') {
+                detailsRow.style.display = 'table-row';
+            } else {
+                detailsRow.style.display = 'none';
+            }
+        }
+
+        function renderTable(logs) {
+            const tbody = document.getElementById('logsBody');
+            tbody.innerHTML = '';
+
+            if (logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No logs found. Run some monitored methods!</td></tr>';
+                return;
+            }
+
+            logs.forEach((log, index) => {
+                const tr = document.createElement('tr');
+                tr.style.cursor = 'pointer';
+                tr.onclick = () => toggleDetails(index);
+                tr.innerHTML = `
+                    <td style="color: #94a3b8; font-size: 0.85rem; white-space: nowrap;">${log.datetime}</td>
+                    <td><span class="badge badge-${log.status}">${log.status}</span></td>
+                    <td style="font-weight: 600; color: #38bdf8;">${log.action}</td>
+                    <td style="font-family: monospace; font-size: 0.9rem;">${log.method}</td>
+                    <td style="font-weight: 600;">${log.duration}</td>
+                    <td style="font-weight: 600; color: #818cf8;">${log.cpuTime}</td>
+                    <td style="font-weight: 600; color: #a78bfa;">${log.ramAllocated}</td>
+                    <td style="color: #cbd5e1; font-size: 0.9rem;">${log.message}</td>
+                `;
+                tbody.appendChild(tr);
+
+                const detailsTr = document.createElement('tr');
+                detailsTr.id = `details-${index}`;
+                detailsTr.style.display = 'none'; // Escondido por padrão
+                detailsTr.innerHTML = `
+                    <td colspan="8" style="padding: 0;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);">
+                            <strong style="color: #38bdf8; font-size: 0.85rem; text-transform: uppercase;">Method Arguments:</strong>
+                            <div style="font-family: monospace; font-size: 0.9rem; color: #f8fafc; margin-top: 0.5rem; word-break: break-all;">
+                                ${log.args}
+                            </div>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(detailsTr);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allLogs.filter(log => log.raw.toLowerCase().includes(term));
+            renderTable(filtered);
+        });
+
+        // Initial load
+        fetchLogs();
+    </script>
+</body>
+
+</html>
