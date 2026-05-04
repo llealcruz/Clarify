@@ -167,7 +167,7 @@
             font-style: italic;
         }
 
-        /* Feature 8: Analytics Styles */
+        /* Estilos da Aba Analytics */
         .tabs {
             display: flex;
             gap: 2rem;
@@ -294,6 +294,219 @@
             color: #38bdf8;
             font-weight: 600;
         }
+
+        /* === Cartões de Resumo === */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-card {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.2s, border-color 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .summary-card .label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.4rem;
+        }
+
+        .summary-card .value {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .summary-card .sub {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+        }
+
+        .val-blue {
+            color: #38bdf8;
+        }
+
+        .val-green {
+            color: #4ade80;
+        }
+
+        .val-red {
+            color: #f87171;
+        }
+
+        .val-purple {
+            color: #a78bfa;
+        }
+
+        /* === Barras de Indicadores do Sistema === */
+        .system-gauges {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gauge-card {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .gauge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+
+        .gauge-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .gauge-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .gauge-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .gauge-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1.5s ease-out;
+        }
+
+        .gauge-fill-ram {
+            background: linear-gradient(to right, #a78bfa, #8b5cf6);
+        }
+
+        .gauge-fill-cpu {
+            background: linear-gradient(to right, #818cf8, #4f46e5);
+        }
+
+        .gauge-sub {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 0.4rem;
+        }
+
+        /* === Alertas Recentes === */
+        .alerts-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            grid-column: 1 / -1;
+        }
+
+        .alerts-card h3 {
+            font-size: 1rem;
+            color: #f87171;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.85rem;
+        }
+
+        .alert-item:last-child {
+            border-bottom: none;
+        }
+
+        .alert-time {
+            color: #64748b;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            min-width: 130px;
+        }
+
+        .alert-method {
+            font-family: monospace;
+            color: #f8fafc;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        /* === Tabela de Rankings === */
+        .rankings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .rankings-table th {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .rankings-table td {
+            padding: 0.7rem 1rem;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .rankings-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .rank-method {
+            font-family: monospace;
+            color: #38bdf8;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .rank-good {
+            color: #4ade80;
+        }
+
+        .rank-warn {
+            color: #facc15;
+        }
+
+        .rank-bad {
+            color: #f87171;
+        }
     </style>
 </head>
 
@@ -305,6 +518,54 @@
     </header>
 
     <div class="glass-container">
+        <!-- Cartões de Resumo -->
+        <div class="summary-grid" id="summaryGrid">
+            <div class="summary-card">
+                <div class="label">Total Requests</div>
+                <div class="value val-blue" id="stat-total">—</div>
+                <div class="sub">monitored executions</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Avg. Response Time</div>
+                <div class="value val-purple" id="stat-avg">—</div>
+                <div class="sub">milliseconds</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Error Rate</div>
+                <div class="value val-red" id="stat-error">—</div>
+                <div class="sub">of total requests</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Success Rate</div>
+                <div class="value val-green" id="stat-success">—</div>
+                <div class="sub">healthy executions</div>
+            </div>
+        </div>
+
+        <!-- Indicadores do Sistema -->
+        <div class="system-gauges" id="systemGauges">
+            <div class="gauge-card">
+                <div class="gauge-header">
+                    <span class="gauge-label">RAM Usage</span>
+                    <span class="gauge-value" id="gauge-ram-val">— / —</span>
+                </div>
+                <div class="gauge-bar">
+                    <div class="gauge-fill gauge-fill-ram" id="gauge-ram-fill" style="width: 0%"></div>
+                </div>
+                <div class="gauge-sub" id="gauge-ram-sub">Loading...</div>
+            </div>
+            <div class="gauge-card">
+                <div class="gauge-header">
+                    <span class="gauge-label">CPU Usage</span>
+                    <span class="gauge-value" id="gauge-cpu-val">—%</span>
+                </div>
+                <div class="gauge-bar">
+                    <div class="gauge-fill gauge-fill-cpu" id="gauge-cpu-fill" style="width: 0%"></div>
+                </div>
+                <div class="gauge-sub" id="gauge-cpu-sub">Loading...</div>
+            </div>
+        </div>
+
         <div class="tabs">
             <div class="tab active" id="tab-logs" onclick="switchTab('logs')">Log History</div>
             <div class="tab" id="tab-analytics" onclick="switchTab('analytics')">Clarify Analytics</div>
@@ -331,26 +592,56 @@
                         </tr>
                     </thead>
                     <tbody id="logsBody">
-                        <!-- Data will be populated here -->
+                        <!-- Dados serão populados aqui -->
                     </tbody>
                 </table>
             </div>
         </div>
 
         <div id="view-analytics" style="display: none;">
-            <div class="analytics-grid" id="analyticsGrid">
-                <!-- Analytics cards will be populated here -->
+            <!-- Alertas Recentes -->
+            <div class="alerts-card" id="alertsCard">
+                <h3>⚠ Recent Alerts</h3>
+                <div id="alertsList">
+                    <p class="empty-state">No alerts detected.</p>
+                </div>
+            </div>
+
+            <!-- Tabela Avançada de Rankings -->
+            <div class="analytics-card" style="margin-top: 1.5rem;">
+                <h3
+                    style="font-size: 1rem; color: #94a3b8; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Top Method Durations</h3>
+                <div class="table-responsive">
+                    <table class="rankings-table" id="rankingsTable">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Throughput</th>
+                                <th>Avg. Duration</th>
+                                <th>Avg. CPU</th>
+                                <th>Total RAM</th>
+                                <th>Error Rate</th>
+                                <th>Health</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingsBody">
+                            <!-- Populado via JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const API_URL = window.location.pathname.replace(/\/$/, '') + '/api/logs';
+        const BASE_URL = window.location.pathname.replace(/\/$/, '');
+        const API_URL = BASE_URL + '/api/logs';
+        const STATS_URL = BASE_URL + '/api/stats';
         let allLogs = [];
 
         function parseLogLine(line) {
             try {
-                // Tchau Regex, olá JSON!
                 const log = JSON.parse(line);
                 return {
                     datetime: log.datetime || '-',
@@ -365,11 +656,106 @@
                     raw: line
                 };
             } catch (e) {
-                // If parse fails (e.g. old log format), show warning message
                 return { datetime: '-', status: 'UNKNOWN', action: '-', method: '-', duration: '-', message: '⚠️ Incompatible log (Old format). Clear your log file.', args: '-', raw: line };
             }
         }
 
+        // === Cartões de Resumo ===
+        function renderSummaryCards() {
+            const total = allLogs.length;
+            const errors = allLogs.filter(l => l.status === 'ERROR' || l.status === 'DANGER').length;
+            const durations = allLogs.map(l => parseInt(l.duration) || 0);
+            const avgDuration = total > 0 ? (durations.reduce((a, b) => a + b, 0) / total).toFixed(1) : 0;
+            const errorRate = total > 0 ? ((errors / total) * 100).toFixed(1) : 0;
+            const successRate = total > 0 ? (((total - errors) / total) * 100).toFixed(1) : 0;
+
+            document.getElementById('stat-total').textContent = total.toLocaleString();
+            document.getElementById('stat-avg').textContent = avgDuration + 'ms';
+            document.getElementById('stat-error').textContent = errorRate + '%';
+            document.getElementById('stat-success').textContent = successRate + '%';
+        }
+
+        // === Indicadores do Sistema (RAM / CPU) ===
+        async function fetchSystemStats() {
+            try {
+                const response = await fetch(STATS_URL);
+                const stats = await response.json();
+
+                document.getElementById('gauge-ram-val').textContent = stats.ramUsedMB + ' / ' + stats.ramMaxMB + ' MB';
+                document.getElementById('gauge-ram-fill').style.width = stats.ramPercent + '%';
+                document.getElementById('gauge-ram-sub').textContent = stats.ramPercent + '% utilized';
+
+                document.getElementById('gauge-cpu-val').textContent = stats.cpuPercent + '%';
+                document.getElementById('gauge-cpu-fill').style.width = Math.min(stats.cpuPercent, 100) + '%';
+                document.getElementById('gauge-cpu-sub').textContent = 'JVM process CPU load';
+            } catch (e) {
+                document.getElementById('gauge-ram-sub').textContent = 'Unavailable';
+                document.getElementById('gauge-cpu-sub').textContent = 'Unavailable';
+            }
+        }
+
+        // === Alertas Recentes ===
+        function renderAlerts() {
+            const alerts = allLogs.filter(l => l.status === 'ERROR' || l.status === 'DANGER').slice(0, 10);
+            const container = document.getElementById('alertsList');
+
+            if (alerts.length === 0) {
+                container.innerHTML = '<p class="empty-state">No alerts detected. All methods are healthy! ✅</p>';
+                return;
+            }
+
+            container.innerHTML = alerts.map(a => `
+                <div class="alert-item">
+                    <span class="badge badge-${a.status}">${a.status}</span>
+                    <span class="alert-time">${a.datetime}</span>
+                    <span class="alert-method" title="${a.method}">${a.action !== '-' ? a.action : a.method}</span>
+                </div>
+            `).join('');
+        }
+
+        // === Tabela Avançada de Rankings ===
+        function renderRankings() {
+            const groups = {};
+            allLogs.forEach(log => {
+                if (!groups[log.method]) {
+                    groups[log.method] = { name: log.method, ramTotal: 0, cpuTotal: 0, durationTotal: 0, count: 0, errors: 0 };
+                }
+                const g = groups[log.method];
+                g.ramTotal += parseRAM(log.ramAllocated);
+                g.cpuTotal += parseInt(log.cpuTime) || 0;
+                g.durationTotal += parseInt(log.duration) || 0;
+                g.count++;
+                if (log.status === 'ERROR' || log.status === 'DANGER') g.errors++;
+            });
+
+            const sorted = Object.values(groups).sort((a, b) => (b.durationTotal / b.count) - (a.durationTotal / a.count));
+            const tbody = document.getElementById('rankingsBody');
+
+            if (sorted.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Insufficient data for analytics.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = sorted.map(g => {
+                const avgDur = (g.durationTotal / g.count).toFixed(1);
+                const avgCpu = (g.cpuTotal / g.count).toFixed(1);
+                const errRate = ((g.errors / g.count) * 100).toFixed(1);
+                const healthClass = errRate > 10 ? 'rank-bad' : errRate > 0 ? 'rank-warn' : 'rank-good';
+                const healthLabel = errRate > 10 ? 'CRITICAL' : errRate > 0 ? 'WARN' : 'HEALTHY';
+
+                return `<tr>
+                    <td class="rank-method" title="${g.name}">${g.name}</td>
+                    <td style="font-weight:600;">${g.count}</td>
+                    <td style="font-weight:600; color:#a78bfa;">${avgDur}ms</td>
+                    <td style="font-weight:600; color:#818cf8;">${avgCpu}ms</td>
+                    <td style="font-weight:600; color:#a78bfa;">${formatRAM(g.ramTotal)}</td>
+                    <td style="font-weight:600; ${errRate > 0 ? 'color:#f87171;' : 'color:#4ade80;'}">${errRate}%</td>
+                    <td><span class="badge badge-${healthLabel === 'HEALTHY' ? 'OK' : healthLabel === 'WARN' ? 'WARN' : 'ERROR'}">${healthLabel}</span></td>
+                </tr>`;
+            }).join('');
+        }
+
+        // === Buscar e Renderizar ===
         async function fetchLogs() {
             const tbody = document.getElementById('logsBody');
             tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Loading logs from disk...</td></tr>';
@@ -378,9 +764,11 @@
                 const response = await fetch(API_URL);
                 const lines = await response.json();
 
-                allLogs = lines.filter(l => l.trim() !== '').map(parseLogLine).reverse(); // Most recent first
+                allLogs = lines.filter(l => l.trim() !== '').map(parseLogLine).reverse(); // Mais recentes primeiro
                 renderTable(allLogs);
-                renderAnalytics();
+                renderSummaryCards();
+                renderAlerts();
+                renderRankings();
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan="8" class="empty-state" style="color: #f87171;">Error loading data from API.</td></tr>`;
             }
@@ -392,8 +780,6 @@
 
             document.getElementById('tab-logs').classList.toggle('active', tab === 'logs');
             document.getElementById('tab-analytics').classList.toggle('active', tab === 'analytics');
-
-            if (tab === 'analytics') renderAnalytics();
         }
 
         function parseRAM(ramStr) {
@@ -411,63 +797,6 @@
             const sizes = ['B', 'KB', 'MB', 'GB'];
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-        }
-
-        function renderAnalytics() {
-            const grid = document.getElementById('analyticsGrid');
-            if (allLogs.length === 0) {
-                grid.innerHTML = '<p class="empty-state">Insufficient data for analytics.</p>';
-                return;
-            }
-
-            const groups = {};
-            allLogs.forEach(log => {
-                if (!groups[log.method]) {
-                    groups[log.method] = { name: log.method, ramTotal: 0, cpuTotal: 0, durationTotal: 0, count: 0 };
-                }
-                const g = groups[log.method];
-                g.ramTotal += parseRAM(log.ramAllocated);
-                g.cpuTotal += parseInt(log.cpuTime) || 0;
-                g.durationTotal += parseInt(log.duration) || 0;
-                g.count++;
-            });
-
-            const methodStats = Object.values(groups);
-
-            const ramRanking = [...methodStats].sort((a, b) => b.ramTotal - a.ramTotal).slice(0, 5);
-            const cpuRanking = [...methodStats].sort((a, b) => (b.cpuTotal / b.count) - (a.cpuTotal / a.count)).slice(0, 5);
-            const timeRanking = [...methodStats].sort((a, b) => (b.durationTotal / b.count) - (a.durationTotal / a.count)).slice(0, 5);
-
-            grid.innerHTML = `
-                ${renderCard('Top RAM Allocators (Total)', ramRanking, 'ramTotal', val => formatRAM(val), 'fill-ram')}
-                ${renderCard('Top CPU Burners (Avg)', cpuRanking, 'cpuTotal', (val, g) => (val / g.count).toFixed(1) + 'ms', 'fill-cpu')}
-                ${renderCard('Top Slow Methods (Avg)', timeRanking, 'durationTotal', (val, g) => (val / g.count).toFixed(1) + 'ms', 'fill-time')}
-            `;
-        }
-
-        function renderCard(title, data, key, formatter, fillClass) {
-            const maxVal = data.length > 0 ? (key === 'ramTotal' ? data[0][key] : data[0][key] / data[0].count) : 1;
-
-            return `
-                <div class="analytics-card">
-                    <h3>${title}</h3>
-                    ${data.map(g => {
-                const currentVal = key === 'ramTotal' ? g[key] : g[key] / g.count;
-                const percent = (currentVal / maxVal) * 100;
-                return `
-                            <div class="ranking-item">
-                                <div class="ranking-info">
-                                    <span class="ranking-method" title="${g.name}">${g.name}</span>
-                                    <span class="ranking-value">${formatter(g[key], g)}</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill ${fillClass}" style="width: ${percent}%"></div>
-                                </div>
-                            </div>
-                        `;
-            }).join('')}
-                </div>
-            `;
         }
 
         function toggleDetails(index) {
@@ -527,8 +856,12 @@
             renderTable(filtered);
         });
 
-        // Initial load
+        // Carregamento inicial
         fetchLogs();
+        fetchSystemStats();
+
+        // Atualização automática das métricas do sistema a cada 5 segundos
+        setInterval(fetchSystemStats, 5000);
     </script>
     <footer style="cursor: pointer;">
         <a href="https://github.com/llealcruz" target="_blank" style="text-decoration: none; color: inherit;">
