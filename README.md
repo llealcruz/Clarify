@@ -129,3 +129,16 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http.build();
 }
 ```
+
+
+---
+
+## 🖼️ Screenshots
+
+### 1. Log History View
+The main dashboard showing real-time executions, searchable and filterable.
+![Dashboard Log History](./docs/images/ClarifyDashboard.png)
+
+### 2. Analytics & Performance Rankings
+Advanced view for identifying bottlenecks, error rates, and system-wide RAM/CPU usage.
+![Dashboard Analytics](./docs/images/ClarifyDashboard1.png)

@@ -9,6 +9,30 @@ import llealcruz.clarify.model.TestObject;
 @SpringBootApplication
 public class ClarifyTest {
 
+    public static void main(String[] args) throws Exception {
+        // Inicializa o servidor Web do Spring Boot na porta 8080
+        org.springframework.context.ApplicationContext context = SpringApplication.run(ClarifyTest.class, args);
+
+        // Puxa a classe gerenciada pelo Spring para executar os metodos anotados
+        ClarifyTest test = context.getBean(ClarifyTest.class);
+        test.dangerMethod(new TestObject("Luã", 27));
+        test.okMethod();
+        test.warnMethod();
+        test.heavyCpuMethod();
+
+        try {
+            test.monitoredErrorMethod();
+        } catch (Exception e) {
+            System.out.println("Monitored error captured in Main: " + e.getMessage());
+        }
+
+        try {
+            test.silentErrorMethod();
+        } catch (Exception e) {
+            System.out.println("Silent error captured in Main: " + e.getMessage());
+        }
+    }
+
     @ClarifyMonitor(action = "Method that will warn", tag = "1")
     public void warnMethod() {
         try {
@@ -58,29 +82,5 @@ public class ClarifyTest {
             sum += i;
         }
         System.out.println("Processing complete. Sum = " + sum);
-    }
-
-    public static void main(String[] args) throws Exception {
-        // Inicializa o servidor Web do Spring Boot na porta 8080
-        org.springframework.context.ApplicationContext context = SpringApplication.run(ClarifyTest.class, args);
-
-        // Puxa a classe gerenciada pelo Spring para executar os metodos anotados
-        ClarifyTest test = context.getBean(ClarifyTest.class);
-        test.dangerMethod(new TestObject("Luã", 27));
-        test.okMethod();
-        test.warnMethod();
-        test.heavyCpuMethod();
-
-        try {
-            test.monitoredErrorMethod();
-        } catch (Exception e) {
-            System.out.println("Monitored error captured in Main: " + e.getMessage());
-        }
-
-        try {
-            test.silentErrorMethod();
-        } catch (Exception e) {
-            System.out.println("Silent error captured in Main: " + e.getMessage());
-        }
     }
 }

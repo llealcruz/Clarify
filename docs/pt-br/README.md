@@ -12,13 +12,13 @@ Diferente de ferramentas puramente técnicas, o Clarify atua como uma ponte entr
 Este é um projeto desenvolvido para fins de **estudo e aprimoramento técnico**.
 
 Para equilibrar o padrão profissional com as necessidades didáticas:
+
 - **Aplicação e Documentação:** Todas as APIs públicas, nomes de métodos e interface (UI) estão em **Inglês**, seguindo os padrões da indústria.
 - **Comentários Internos:** Optei por manter os comentários do código em **Português**. Essa decisão foi tomada para facilitar meu próprio processo de aprendizagem, tornando mais simples a revisão de lógicas complexas e a consolidação do conhecimento durante o desenvolvimento.
 
 Esta foi uma escolha consciente para extrair o máximo de valor educacional deste repositório, sem abrir mão de entregar uma ferramenta com interface profissional.
 
 ---
-
 
 ## 🚀 Principais Features
 
@@ -129,3 +129,17 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http.build();
 }
 ```
+
+---
+
+## 🖼️ Screenshots
+
+### 1. Visualização do Histórico de Logs
+
+O dashboard principal mostrando execuções em tempo real, com busca e filtragem.
+![Dashboard Log History](../images/ClarifyDashboard.png)
+
+### 2. Analytics e Rankings de Performance
+
+Visão avançada para identificar gargalos, taxas de erro e uso global de RAM/CPU do sistema.
+![Dashboard Analytics](../images/ClarifyDashboard1.png)
