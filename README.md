@@ -5,6 +5,21 @@ Unlike purely technical tools, Clarify acts as a bridge between code and the pro
 
 [Versão em Português aqui](./docs/pt-br/README.md)
 
+---
+
+## 🎓 Study Project & Language Note
+
+This project was developed for **study and technical improvement purposes**. 
+
+To maintain a balance between professional practice and personal learning:
+- **Application & Documentation:** All public APIs, method names, and UI elements are in **English**, following industry standards.
+- **Internal Comments:** I have intentionally kept code comments in **Portuguese**. This choice was made to facilitate my own learning process, making it easier to review complex logic and consolidate knowledge during the development phase.
+
+This was a conscious decision to maximize the educational value of the repository while still delivering a professional-grade tool.
+
+---
+
+
 ## 🚀 Key Features
 
 - **Zero Config AOP:** Uses native Spring AOP to monitor your application without build configuration needs (*Low Overhead* Architecture).
@@ -39,7 +54,7 @@ Installation was designed to have zero impact on your project's lifecycle. Just 
 To monitor any method in your Spring Bean, simply add the `@ClarifyMonitor` annotation:
 
 ```java
-import com.llealcruz.clarify.annotation.ClarifyMonitor;
+import llealcruz.clarify.annotation.ClarifyMonitor;
 import org.springframework.stereotype.Service;
 
 @Service

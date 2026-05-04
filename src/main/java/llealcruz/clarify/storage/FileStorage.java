@@ -1,4 +1,4 @@
-package com.llealcruz.clarify.storage;
+package llealcruz.clarify.storage;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,9 +10,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.llealcruz.clarify.enums.StatusEnum;
-import com.llealcruz.clarify.model.JoinPointRecord;
-import com.llealcruz.clarify.translator.MessageTranslator;
+import llealcruz.clarify.enums.StatusEnum;
+import llealcruz.clarify.model.JoinPointRecord;
+import llealcruz.clarify.translator.MessageTranslator;
 
 /**
  * Visualizar Persistence_Architecture.md para melhor entendimento.
@@ -33,7 +33,8 @@ public class FileStorage {
     }
 
     private String formatBytes(long bytes) {
-        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1024)
+            return bytes + " B";
         int exp = (int) (Math.log(bytes) / Math.log(1024));
         String pre = "KMGTPE".charAt(exp - 1) + "";
         return String.format(java.util.Locale.US, "%.1f %sB", bytes / Math.pow(1024, exp), pre);
@@ -66,7 +67,8 @@ public class FileStorage {
             String dateTimeStr = joinPointRecord.startTime()
                     .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
-            // Pega os argumentos (parâmetros) que foram passados para o método e transforma em String
+            // Pega os argumentos (parâmetros) que foram passados para o método e transforma
+            // em String
             String argsStr = java.util.Arrays.toString(joinPointRecord.args());
 
             // Pega a ação se existir
@@ -86,9 +88,12 @@ public class FileStorage {
                 cpuTimeStr = "0ms";
             }
 
-            String ramAllocatedStr = (joinPointRecord.ramAllocatedBytes() > 0) ? formatBytes(joinPointRecord.ramAllocatedBytes()) : "-";
+            String ramAllocatedStr = (joinPointRecord.ramAllocatedBytes() > 0)
+                    ? formatBytes(joinPointRecord.ramAllocatedBytes())
+                    : "-";
 
-            // Constrói o JSON manualmente para manter altíssima performance e não depender do Jackson (spring-boot-starter-web)
+            // Constrói o JSON manualmente para manter altíssima performance e não depender
+            // do Jackson (spring-boot-starter-web)
             String lineToPersist = String.format(
                     "{\"datetime\": \"%s\", \"status\": \"%s\", \"action\": \"%s\", \"method\": \"%s\", \"duration\": \"%dms\", \"cpuTime\": \"%s\", \"ramAllocated\": \"%s\", \"message\": \"%s\", \"args\": \"%s\"}\n",
                     dateTimeStr,
@@ -105,19 +110,19 @@ public class FileStorage {
         }
 
         // Pega o caminho completo do arquivo a partir das novas propriedades separadas
-        Path logPath = com.llealcruz.clarify.config.ClarifyProperties.getFullLogPath();
+        Path logPath = llealcruz.clarify.config.ClarifyProperties.getFullLogPath();
 
         // Lógica de Rotação de Logs (Log Rotation)
         try {
             if (Files.exists(logPath)) {
                 long size = Files.size(logPath);
-                long maxSize = com.llealcruz.clarify.config.ClarifyProperties.getMaxSizeMb() * 1024L * 1024L;
+                long maxSize = llealcruz.clarify.config.ClarifyProperties.getMaxSizeMb() * 1024L * 1024L;
 
                 // Se o arquivo passou do limite configurado...
                 if (size >= maxSize) {
                     String timeSuffix = java.time.LocalDateTime.now()
                             .format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-                    String baseName = com.llealcruz.clarify.config.ClarifyProperties.getLogFilename();
+                    String baseName = llealcruz.clarify.config.ClarifyProperties.getLogFilename();
                     int dotIndex = baseName.lastIndexOf('.');
 
                     // Ex: clarify-logs-20260429_132050.jsonl
@@ -129,7 +134,8 @@ public class FileStorage {
                             ? Paths.get(rotatedName)
                             : logPath.getParent().resolve(rotatedName);
 
-                    // Move/renomeia o arquivo atual (o novo começará em branco no próximo Files.writeString)
+                    // Move/renomeia o arquivo atual (o novo começará em branco no próximo
+                    // Files.writeString)
                     Files.move(logPath, rotatedPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                 }
             }
@@ -137,7 +143,8 @@ public class FileStorage {
             System.err.println("Error rotating logs: " + e.getMessage());
         }
 
-        // Abre o arquivo (ou cria um novo se foi rotacionado) e grava tudo de uma vez (Batch Write)
+        // Abre o arquivo (ou cria um novo se foi rotacionado) e grava tudo de uma vez
+        // (Batch Write)
         try {
             Files.writeString(
                     logPath,

@@ -1,6 +1,6 @@
-package com.llealcruz.clarify.enums;
+package llealcruz.clarify.enums;
 
-import com.llealcruz.clarify.config.ClarifyProperties;
+import llealcruz.clarify.config.ClarifyProperties;
 
 public enum StatusEnum {
     OK,

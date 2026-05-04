@@ -1,4 +1,4 @@
-package com.llealcruz.clarify.model;
+package llealcruz.clarify.model;
 
 public class TestObject {
     private String name;

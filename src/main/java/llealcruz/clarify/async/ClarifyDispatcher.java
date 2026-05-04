@@ -1,13 +1,13 @@
-package com.llealcruz.clarify.async;
+package llealcruz.clarify.async;
 
 import java.time.LocalDateTime;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
-import com.llealcruz.clarify.annotation.ClarifyMonitor;
-import com.llealcruz.clarify.model.JoinPointRecord;
-import com.llealcruz.clarify.storage.FileStorage;
+import llealcruz.clarify.annotation.ClarifyMonitor;
+import llealcruz.clarify.model.JoinPointRecord;
+import llealcruz.clarify.storage.FileStorage;
 
 public class ClarifyDispatcher {
     private final FileStorage fileStorage = new FileStorage();

@@ -1,10 +1,10 @@
-package com.llealcruz.clarify;
+package llealcruz.clarify;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.llealcruz.clarify.annotation.ClarifyMonitor;
-import com.llealcruz.clarify.model.TestObject;
+import llealcruz.clarify.annotation.ClarifyMonitor;
+import llealcruz.clarify.model.TestObject;
 
 @SpringBootApplication
 public class ClarifyTest {

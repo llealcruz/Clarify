@@ -1,7 +1,7 @@
-package com.llealcruz.clarify.translator;
+package llealcruz.clarify.translator;
 
-import com.llealcruz.clarify.enums.StatusEnum;
-import com.llealcruz.clarify.model.JoinPointRecord;
+import llealcruz.clarify.enums.StatusEnum;
+import llealcruz.clarify.model.JoinPointRecord;
 
 public class MessageTranslator {
     public StatusEnum translate(JoinPointRecord joinPointRecord) {

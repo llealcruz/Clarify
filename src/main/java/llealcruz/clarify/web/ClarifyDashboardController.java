@@ -1,6 +1,6 @@
-package com.llealcruz.clarify.web;
+package llealcruz.clarify.web;
 
-import com.llealcruz.clarify.config.ClarifyProperties;
+import llealcruz.clarify.config.ClarifyProperties;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.util.StreamUtils;

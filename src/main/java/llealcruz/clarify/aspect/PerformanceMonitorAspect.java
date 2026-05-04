@@ -1,4 +1,4 @@
-package com.llealcruz.clarify.aspect;
+package llealcruz.clarify.aspect;
 
 import java.time.LocalDateTime;
 
@@ -8,7 +8,7 @@ import java.lang.management.ManagementFactory;
 import com.sun.management.ThreadMXBean;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import com.llealcruz.clarify.async.ClarifyDispatcher;
+import llealcruz.clarify.async.ClarifyDispatcher;
 
 @Aspect
 public class PerformanceMonitorAspect {
@@ -30,7 +30,7 @@ public class PerformanceMonitorAspect {
      * O segundo * significa "qualquer nome de método".
      * O (..) significa "com quaisquer parâmetros".
      */
-    @Pointcut("execution(* *(..)) && @annotation(com.llealcruz.clarify.annotation.ClarifyMonitor)")
+    @Pointcut("execution(* *(..)) && @annotation(llealcruz.clarify.annotation.ClarifyMonitor)")
     public void pointCut() {
     }
 
@@ -38,34 +38,40 @@ public class PerformanceMonitorAspect {
     public Object advice(ProceedingJoinPoint capturedJoinPoint) throws Throwable { // Método do joinPoint pode lançar
         LocalDateTime startTimeForRecord = LocalDateTime.now();
         long startTime = System.nanoTime(); // nanoTime: relogio continuo imune a mudancas de horario
-        
+
         long startCpuTime = threadBean.getCurrentThreadCpuTime();
         long startRamAllocated = threadBean.getThreadAllocatedBytes(Thread.currentThread().getId());
-        
+
         try {
             Object result = capturedJoinPoint.proceed(); // Código do método(join point) original roda aqui
             long endTime = System.nanoTime();
             long endCpuTime = threadBean.getCurrentThreadCpuTime();
             long endRamAllocated = threadBean.getThreadAllocatedBytes(Thread.currentThread().getId());
-            
+
             long durationMs = (endTime - startTime) / 1_000_000;
             long cpuTimeNs = (endCpuTime != -1 && startCpuTime != -1) ? (endCpuTime - startCpuTime) : 0;
-            long ramAllocatedBytes = (endRamAllocated != -1 && startRamAllocated != -1) ? (endRamAllocated - startRamAllocated) : 0;
+            long ramAllocatedBytes = (endRamAllocated != -1 && startRamAllocated != -1)
+                    ? (endRamAllocated - startRamAllocated)
+                    : 0;
 
-            clarifyDispatcher.dispatch(capturedJoinPoint, startTimeForRecord, durationMs, cpuTimeNs, ramAllocatedBytes, null);
+            clarifyDispatcher.dispatch(capturedJoinPoint, startTimeForRecord, durationMs, cpuTimeNs, ramAllocatedBytes,
+                    null);
 
             return result; // Retorna oque o método original deveria retornar
         } catch (Throwable t) {
             long endTime = System.nanoTime();
             long endCpuTime = threadBean.getCurrentThreadCpuTime();
             long endRamAllocated = threadBean.getThreadAllocatedBytes(Thread.currentThread().threadId());
-            
+
             long durationMs = (endTime - startTime) / 1_000_000;
             long cpuTimeNs = (endCpuTime != -1 && startCpuTime != -1) ? (endCpuTime - startCpuTime) : 0;
-            long ramAllocatedBytes = (endRamAllocated != -1 && startRamAllocated != -1) ? (endRamAllocated - startRamAllocated) : 0;
-            
-            clarifyDispatcher.dispatch(capturedJoinPoint, startTimeForRecord, durationMs, cpuTimeNs, ramAllocatedBytes, t);
-            
+            long ramAllocatedBytes = (endRamAllocated != -1 && startRamAllocated != -1)
+                    ? (endRamAllocated - startRamAllocated)
+                    : 0;
+
+            clarifyDispatcher.dispatch(capturedJoinPoint, startTimeForRecord, durationMs, cpuTimeNs, ramAllocatedBytes,
+                    t);
+
             throw t; // OBRIGATÓRIO: Repassa a exceção para não quebrar o sistema do cliente
         }
     }
