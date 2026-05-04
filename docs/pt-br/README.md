@@ -107,7 +107,7 @@ clarify:
 ## 📊 Acesso ao Dashboard e Segurança
 
 Ao subir sua aplicação, o Dashboard de performance interativo ficará disponível automaticamente na rota base do seu servidor:
-`http://localhost:8080/clarify`
+`http://sua-url:8080/clarify`
 
 ### 🔒 Segurança Delegada (IMPORTANTE)
 

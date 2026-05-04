@@ -107,7 +107,7 @@ clarify:
 ## 📊 Dashboard Access and Security
 
 Upon starting your application, the interactive performance Dashboard will be automatically available at your server's base route:
-`http://localhost:8080/clarify`
+`http://your-url/clarify`
 
 ### 🔒 Delegated Security (IMPORTANT)
 
